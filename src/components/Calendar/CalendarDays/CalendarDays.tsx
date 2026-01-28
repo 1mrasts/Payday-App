@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react'
 import { handleDateClick } from '../../../utils/dateAction'
 import styles from './CalendarDays.module.css'
 import type { datesType } from './CalendarDays.types'
 
-export function CalendarDays() {
-	const [days, setDays] = useState<datesType[]>([])
+export function CalendarDays({
+	days,
+	setDays,
+}: {
+	days: datesType[]
+	setDays: Dispatch<SetStateAction<datesType[]>>
+}) {
 	// Получаем нашу текущую дату
 	const [currentDate] = useState<Date>(new Date())
 	useEffect(() => {
@@ -37,9 +42,8 @@ export function CalendarDays() {
 				date: date,
 			})
 		}
-		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setDays(startDays)
-	}, [currentDate])
+	}, [currentDate, setDays])
 
 	return (
 		<div className={styles['calendar__menu']}>
