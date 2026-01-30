@@ -5,6 +5,7 @@ export function handleDateClick(
 	id: number,
 	days: datesType[], // Типизируем state
 	setDays: Dispatch<SetStateAction<datesType[]>>, // Типизируем setState
+	salary: number,
 ) {
 	if (days.find(item => item.id == id)?.meta != undefined) {
 		// Выставляем price
@@ -15,7 +16,7 @@ export function handleDateClick(
 		// Убираем price
 		setDays(
 			days.map(item =>
-				item.id === id ? { ...item, meta: { price: 2200 } } : item,
+				item.id === id ? { ...item, meta: { price: salary } } : item,
 			),
 		)
 	}

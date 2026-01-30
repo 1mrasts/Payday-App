@@ -6,9 +6,11 @@ import type { datesType } from './CalendarDays.types'
 export function CalendarDays({
 	days,
 	setDays,
+	salary,
 }: {
 	days: datesType[]
 	setDays: Dispatch<SetStateAction<datesType[]>>
+	salary: number
 }) {
 	// Получаем нашу текущую дату
 	const [currentDate] = useState<Date>(new Date())
@@ -51,16 +53,18 @@ export function CalendarDays({
 				<span
 					className={
 						item.date.getDate() == currentDate.getDate() &&
+						item.date.getDay() == currentDate.getDay() &&
 						item?.meta != undefined
 							? `${styles['today']} ${styles['prices']}`
-							: item.date.getDate() == currentDate.getDate()
+							: item.date.getDate() == currentDate.getDate() &&
+								  item.date.getDay() == currentDate.getDay()
 								? styles['today']
 								: item?.meta != undefined
 									? styles['prices']
 									: ''
 					}
 					key={item.id}
-					onClick={() => handleDateClick(item.id, days, setDays)}
+					onClick={() => handleDateClick(item.id, days, setDays, salary)}
 				>
 					{item.date.getDate()}
 				</span>
