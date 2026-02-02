@@ -5,8 +5,15 @@ export function CalendarInfo({ days }: { days: datesType[] }) {
 		let sum = 0
 
 		days
-			.filter(item => item.meta?.price != null)
-			.forEach(item => (sum += Number(item.meta?.price)))
+			.filter(item => item.meta != undefined)
+			.forEach(
+				item =>
+					item.meta != undefined &&
+					item.meta.price &&
+					(sum +=
+						((item.meta.finishTime - item.meta.startTime) / 3600000) *
+						item.meta.price),
+			)
 		return sum
 	}
 
