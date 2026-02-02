@@ -7,10 +7,12 @@ export function CalendarDays({
 	days,
 	setDays,
 	salary,
+	setCurrentDay,
 }: {
 	days: datesType[]
 	setDays: Dispatch<SetStateAction<datesType[]>>
 	salary: number
+	setCurrentDay: Dispatch<SetStateAction<datesType | undefined>>
 }) {
 	// Получаем нашу текущую дату
 	const [currentDate] = useState<Date>(new Date())
@@ -71,7 +73,9 @@ export function CalendarDays({
 					<span
 						className={className}
 						key={item.id}
-						onClick={() => handleDateClick(item.id, days, setDays, salary)}
+						onClick={() =>
+							handleDateClick(item.id, days, setDays, salary, setCurrentDay)
+						}
 					>
 						{item.date.getDate()}
 					</span>
