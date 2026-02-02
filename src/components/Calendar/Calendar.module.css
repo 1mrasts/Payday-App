@@ -1,0 +1,11 @@
+.calendar {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+.calendar__main {
+	display: flex;
+	flex-direction: column;
+	max-width: 900px;
+	width: 100%;
+}
