@@ -11,7 +11,8 @@ export function CalendarInfo({ days }: { days: datesType[] }) {
 					item.meta != undefined &&
 					item.meta.price &&
 					(sum +=
-						((item.meta.finishTime - item.meta.startTime) / 3600000) *
+						((item.meta.finishTime.getTime() - item.meta.startTime.getTime()) /
+							3600000) *
 						item.meta.price),
 			)
 		return sum
