@@ -4,89 +4,27 @@ import type {
 	time,
 } from '../components/Calendar/CalendarDays/CalendarDays.types'
 
-const [initialStartHours, initialStartMinutes] = [8, 0]
-const [initialFinishHours, initialFinishMinutes] = [21, 0]
-
 export function handleDateClick(
 	id: number,
 	days: datesType[], // Типизируем state
 	setDays: Dispatch<SetStateAction<datesType[]>>, // Типизируем setState
 	salary: number,
-	setCurrentDay: Dispatch<SetStateAction<datesType | undefined>>,
+	time: time | undefined,
+	setSelectedDayID: Dispatch<SetStateAction<number | null>>,
 ) {
 	const currentDate = days.find(item => item.id == id)
-	let startDate: Date = new Date()
-	let finishDate: Date = new Date()
+	let startDate: Date | time = new Date()
+	let finishDate: Date | time = new Date()
 
 	if (currentDate?.date instanceof Date) {
+		const [startHours, startMinutes] = time
+			? time.startTime.split(':').map(Number)
+			: [8, 0]
+		const [finishHours, finishMinutes] = time
+			? time.finishTime.split(':').map(Number)
+			: [21, 0]
+
 		const { date } = currentDate
-
-		startDate = new Date(
-			date.getFullYear(),
-			date.getMonth(),
-			date.getDate(),
-			initialStartHours,
-			initialStartMinutes,
-		)
-		finishDate = new Date(
-			date.getFullYear(),
-			date.getMonth(),
-			date.getDate(),
-			initialFinishHours,
-			initialFinishMinutes,
-		)
-	}
-
-	if (currentDate?.meta != undefined) {
-		// Убираем price
-		setDays(
-			days.map(item => (item.id === id ? { ...item, meta: undefined } : item)),
-		)
-		setCurrentDay(currentDate)
-	} else {
-		// Выставляем price
-		setDays(
-			days.map(item =>
-				item.id === id
-					? {
-							...item,
-							meta: {
-								price: salary,
-								startTime: startDate.getTime(),
-								finishTime: finishDate.getTime(),
-							},
-						}
-					: item,
-			),
-		)
-		if (typeof currentDate == 'object') {
-			setCurrentDay(currentDate)
-		}
-	}
-	console.log(currentDate)
-}
-
-export function handleTimeClick(
-	id: number,
-	day: datesType,
-	setDays: Dispatch<SetStateAction<datesType[]>>,
-	time: time | undefined,
-	days: datesType[],
-) {
-	const currentDate = day
-	let startDate: Date = new Date()
-	let finishDate: Date = new Date()
-
-	if (currentDate.date instanceof Date) {
-		const { date } = currentDate
-		const [startHours, startMinutes] =
-			time != undefined
-				? time.startTime.split(':').map(Number)
-				: [initialStartHours, initialStartMinutes]
-		const [finishHours, finishMinutes] =
-			time != undefined
-				? time.finishTime.split(':').map(Number)
-				: [initialFinishHours, initialFinishMinutes]
 
 		startDate = new Date(
 			date.getFullYear(),
@@ -103,19 +41,32 @@ export function handleTimeClick(
 			finishMinutes,
 		)
 	}
+
+	if (currentDate?.meta != undefined) {
+		// Убираем price
+		setDays(prev =>
+			prev.map(item => (item.id === id ? { ...item, meta: undefined } : item)),
+		)
+		setSelectedDayID(currentDate.id)
+	} else {
+		// Выставляем price
+		setDays(prev =>
+			prev.map(item =>
+				item.id === id
+					? {
+							...item,
+							meta: {
+								price: salary,
+								startTime: startDate,
+								finishTime: finishDate,
+							},
+						}
+					: item,
+			),
+		)
+		if (typeof currentDate == 'object') {
+			setSelectedDayID(currentDate.id)
+		}
+	}
 	console.log(currentDate)
-	setDays(
-		days.map(item =>
-			item.id === id
-				? {
-						...item,
-						meta: {
-							...item.meta,
-							startTime: startDate.getTime(),
-							finishTime: finishDate.getTime(),
-						},
-					}
-				: item,
-		),
-	)
 }
