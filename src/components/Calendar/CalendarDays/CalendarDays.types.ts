@@ -5,8 +5,8 @@ export type datesType = {
 }
 export type metaType = {
 	price?: number
-	startTime: number
-	finishTime: number
+	startTime: Date
+	finishTime: Date
 }
 
 export type time = {
