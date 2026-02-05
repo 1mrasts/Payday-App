@@ -22,7 +22,7 @@ export function CalendarDays({
 	days: datesType[]
 	setDays: Dispatch<SetStateAction<datesType[]>>
 	salary: number
-	time: time | undefined
+	time: time
 	setSelectedDayID: Dispatch<SetStateAction<number | null>>
 }) {
 	const clickTimeoutRef = useRef<number | null>(null)
