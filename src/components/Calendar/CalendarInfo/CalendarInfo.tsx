@@ -1,6 +1,8 @@
 import type { datesType } from '../CalendarDays/CalendarDays.types'
 
 export function CalendarInfo({ days }: { days: datesType[] }) {
+	const today = new Date()
+
 	function getFullSum() {
 		let sum = 0
 
@@ -18,9 +20,19 @@ export function CalendarInfo({ days }: { days: datesType[] }) {
 		return sum < 0 ? sum * -1 : sum
 	}
 
+	function getWorkDayCount() {
+		return days.filter(
+			item =>
+				item.meta?.price != undefined &&
+				item.date.getMonth() + 1 == today.getMonth() + 1,
+		).length
+	}
+
 	return (
 		<>
 			<span>Сумма в месяц: {getFullSum()}</span>
+			<br />
+			<span>Рабочих дней в месяц: {getWorkDayCount()}</span>
 		</>
 	)
 }
