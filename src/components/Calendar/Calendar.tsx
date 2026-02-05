@@ -10,9 +10,12 @@ import { Settings } from './Settings/Settings'
 export function Calendar() {
 	const [days, setDays] = useState<datesType[]>([])
 	const [selectedDayId, setSelectedDayID] = useState<number | null>(null)
-	const [time, setTime] = useState<time>()
+	const [time, setTime] = useState<time>({
+		startTime: new Date(),
+		finishTime: new Date(),
+	})
 	const [salary, setSalary] = useState<number>(141)
-	const currentDay = days.find(d => d.id === selectedDayId)
+	const currentDay = days.find(day => day.id === selectedDayId)
 	return (
 		<main>
 			<div className={styles.calendar}>
@@ -39,6 +42,7 @@ export function Calendar() {
 				salary={salary}
 				setTime={setTime}
 				time={time}
+				currentDay={currentDay}
 			/>
 		</main>
 	)
