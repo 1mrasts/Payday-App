@@ -1,0 +1,32 @@
+.calendar__template-open {
+	background-color: #131315;
+	padding: 8px;
+	border: 1px #2e2e33 solid;
+	border-radius: 15px;
+	display: inline-flex;
+	align-self: flex-start;
+}
+.calendar__template-open img {
+	width: 35px;
+	max-height: 35px;
+}
+.graphics {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+.graphics__item {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+}
+.graphics__item button {
+	padding: 0px 15px;
+	gap: 15px;
+}
+.calendar__template-close {
+	position: absolute;
+	right: 10px;
+	width: 35px !important;
+	height: 35px !important;
+}
